@@ -11,6 +11,13 @@ export default function Home() {
           {/* Upload Section */}
           <div className="flex flex-col">
             <h2 className="text-xl font-medium mb-4">Upload Resumes</h2>
+            <p className = "text-sm text-gray-600 mb-4">
+              Upload one or more PDF resumes to evalute candidates based on 
+              customizable leadership, technical skills, experience, and education 
+              weights.
+            </p>
+
+
             <input
               type="file"
               multiple
@@ -24,7 +31,7 @@ export default function Home() {
           <div className="flex flex-col">
             <h2 className="text-xl font-medium mb-4">Evaluation Parameters</h2>
 
-            <label className="flex flex-col mb-4 text-sm">
+            <label className="flex group flex-col mb-4 text-sm">
               Leadership Weight
               <input
                 type="number"
@@ -32,6 +39,13 @@ export default function Home() {
                 defaultValue={0.3}
                 className="border border-gray-300 rounded-md p-2 mt-1"
               />
+
+              <span 
+                className="absolute left-0 -bottom-6 text-xs text-gray-500 opacity-0 
+                group-hover:opacity-100 transition-opacity duration-200"
+              >
+                Enter your preference for Leadership weight
+              </span>
             </label>
 
             <label className="flex flex-col mb-4 text-sm">
