@@ -1,14 +1,52 @@
+"use client";
+
+import "./globals.css";
+import UploadSection from "./components/UploadSection";
+import ParametersSection from "./components/ParametersSection";
+import GradeButton from "./components/GradeButton";
+
+export default function Home() {
+  return (
+    <div className="min-h-screen bg-gray-100 flex justify-center items-start p-8">
+      <div className="bg-white w-full max-w-5xl p-10 rounded-xl shadow-lg">
+        <h1 className="text-3xl font-semibold mb-10 text-gray-900">
+          Active Resume Grader
+        </h1>
+
+        <div className="grid md:grid-cols-2 gap-10">
+          {/* Left side: Upload */}
+          <UploadSection />
+
+          {/* Right side: Parameters + Button */}
+          <div className="flex flex-col">
+            <ParametersSection />
+            <GradeButton />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/*
+"use client";
 import Image from "next/image";
 import "./globals.css";
 
+import { useRouter } from "next/navigation"; 
+
 export default function Home() {
+  const router = useRouter();
+  const handleGradeClick = () => {
+    router.push("/results"); // navigate to results page
+};
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-start p-8">
       <div className="bg-white w-full max-w-5xl p-10 rounded-xl shadow-lg">
         <h1 className="text-3xl font-semibold mb-10">Active Resume Grader</h1>
 
         <div className="grid md:grid-cols-2 gap-10">
-          {/* Upload Section */}
+          {}
           <div className="flex flex-col">
             <h2 className="text-xl font-medium mb-4">Upload Resumes</h2>
             <input
@@ -20,7 +58,7 @@ export default function Home() {
             <p className="text-foreground text-sm mt-2">PDF files only</p>
           </div>
 
-          {/* Parameters Section */}
+          {}
           <div className="flex flex-col">
             <h2 className="text-xl font-medium mb-4">Evaluation Parameters</h2>
 
@@ -73,12 +111,15 @@ export default function Home() {
               />
             </label>
 
-            <button className="bg-gray-900 text-white px-6 py-2 rounded-md hover:bg-gray-500 transition">
+            <div className="flex flex-col mb-4 text-sm"><button onClick={handleGradeClick}
+            className="bg-gray-900 text-white px-6 py-2 rounded-md hover:bg-gray-700 transition">
               Grade Resumes
-            </button>
+              </button>
+              </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
+*/
