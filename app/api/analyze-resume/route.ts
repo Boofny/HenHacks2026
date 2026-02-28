@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(arrayBuffer);
 
     const response = await ai.models.generateContent({
-      model: "gemini-1.5-pro", // subject to change most likey use 2.5 flash
+      model: "gemini-2.5-flash",
       contents: [
         {
           role: "user",
@@ -36,15 +36,20 @@ export async function POST(req: NextRequest) {
             },
             {
               text: `
-              Extract resume info and return STRICT JSON:
-              {
-                "name": "",
-                "email": "",
-                "skills": [],
-                "years_experience": number
-              }
+                 Extract ONLY the following fields from this PDF and return STRICT JSON:
+                  {
+                    "name": "",
+                    "email": "",
+                    "skills": [],
+                    "years_experience": number,
+                    "grade": number,
+                    "reason": ""
+                  }
+                  Do NOT include any other sections, text, or formatting.
+                  Return JSON only, no explanations, no markdown.
               `,
             },
+
           ],
         },
       ],
