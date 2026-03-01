@@ -4,6 +4,9 @@ import "./globals.css";
 import UploadSection from "./components/UploadSection";
 import ParametersSection from "./components/ParametersSection";
 import GradeButton from "./components/GradeButton";
+import { useState } from "react";
+
+
 
 export default function Home() {
   return (
@@ -14,10 +17,10 @@ export default function Home() {
         </h1>
 
         <div className="grid md:grid-cols-2 gap-10">
-          {/* Left side: Upload */}
+          {/* Left side: Upload*/ }
           <UploadSection />
 
-          {/* Right side: Parameters + Button */}
+          {/* Right side: Parameters + Button*/ }
           <div className="flex flex-col">
             <ParametersSection />
             <GradeButton />
