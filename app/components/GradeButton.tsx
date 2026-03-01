@@ -113,18 +113,113 @@
 //   );
 // }
 
+// "use client";
+//
+// import { useState } from "react";
+// import { getFiles } from "../lib/fileStore";
+// import { useRouter } from "next/navigation";
+// import { useResultsStore } from "../store/resultsStore";
+//
+// interface AnalyzeButtonProps {
+//   paramsString: string;
+// }
+//
+// export default function AnalyzeButton({ paramsString }: AnalyzeButtonProps) {
+//   const [loading, setLoading] = useState(false);
+//   const [results, setResults] = useState<any[]>([]);
+//   const [error, setError] = useState<string | null>(null);
+//
+//   const handleAnalyze = async () => {
+//     const setParticipants = useResultsStore((s) => s.setParticipants);
+//     const setResultsGlobal = useResultsStore((s) => s.setResults);
+//     const files = getFiles();
+//     const router = useRouter();
+//     if (!files.length) {
+//       setError("No files selected");
+//       return;
+//     }
+//
+//     setLoading(true);
+//     setError(null);
+//     setResults([]);
+//
+//     try {
+//       const formData = new FormData();
+//       files.forEach((file) => formData.append("files", file));
+//
+//       formData.append("parameters", paramsString);
+//
+//       const res = await fetch("/api/analyze-resume", {
+//         method: "POST",
+//         body: formData,
+//       });
+//
+//       const data = await res.json(); //read response
+//
+//       if (!res.ok) {
+//         setError(data.error || "Something went wrong");
+//       } else {
+//         setResults(data.data || []); //store results
+//         setParticipants(data.participants);    // store participants globally
+//         router.push("/results"); 
+//       }
+//     } catch (err: any) {
+//       setError(err.message || "Upload failed");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+//
+//   return (
+//     <div className="space-y-3">
+//       <button
+//         onClick={handleAnalyze}
+//         disabled={loading}
+//         className="bg-black h-10 px-4 text-white rounded hover:bg-gray-800 w-full hover:cursor-pointer"
+//       >
+//         {loading ? "Processing..." : "Analyze"}
+//       </button>
+//
+//       {/* Error */}
+//       {error && <p className="text-red-500">{error}</p>}
+//
+//       {/* Results */}
+//       {results.length > 0 && (
+//         <div className="space-y-2">
+//           {results.map((r, idx) => (
+//             <div key={idx} className="p-2 border rounded bg-gray-50 dark:bg-gray-900 text-white">
+//               <h2 className="font-semibold">{r.fileName}</h2>
+//               <pre>
+//                 {r.data ? JSON.stringify(r.data, null, 2) : r.error}
+//               </pre>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+//
+
 "use client";
 
 import { useState } from "react";
 import { getFiles } from "../lib/fileStore";
+import { useRouter } from "next/navigation";
+import { useResultsStore } from "../store/resultsStore";
 
 interface AnalyzeButtonProps {
   paramsString: string;
 }
 
 export default function AnalyzeButton({ paramsString }: AnalyzeButtonProps) {
+  const router = useRouter();
+
+  const setResultsGlobal = useResultsStore((s) => s.setResults);
+  const setParticipants = useResultsStore((s) => s.setParticipants);
+  const setParameters = useResultsStore((s) => s.setParameters);
+
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const handleAnalyze = async () => {
@@ -137,12 +232,10 @@ export default function AnalyzeButton({ paramsString }: AnalyzeButtonProps) {
 
     setLoading(true);
     setError(null);
-    setResults([]);
 
     try {
       const formData = new FormData();
       files.forEach((file) => formData.append("files", file));
-
       formData.append("parameters", paramsString);
 
       const res = await fetch("/api/analyze-resume", {
@@ -150,12 +243,19 @@ export default function AnalyzeButton({ paramsString }: AnalyzeButtonProps) {
         body: formData,
       });
 
-      const data = await res.json(); //read response
+      const data = await res.json();
 
       if (!res.ok) {
         setError(data.error || "Something went wrong");
       } else {
-        setResults(data.data || []); //store results
+        // Store globally
+        setResultsGlobal(data.data);
+        setParticipants(data.participants);
+        setParameters(data.parameters);
+        useResultsStore.getState().setParameters(data.parameters);
+
+        // Redirect to results page
+        router.push("/results");
       }
     } catch (err: any) {
       setError(err.message || "Upload failed");
@@ -174,22 +274,7 @@ export default function AnalyzeButton({ paramsString }: AnalyzeButtonProps) {
         {loading ? "Processing..." : "Analyze"}
       </button>
 
-      {/* Error */}
       {error && <p className="text-red-500">{error}</p>}
-
-      {/* Results */}
-      {results.length > 0 && (
-        <div className="space-y-2">
-          {results.map((r, idx) => (
-            <div key={idx} className="p-2 border rounded bg-gray-50 dark:bg-gray-900 text-white">
-              <h2 className="font-semibold">{r.fileName}</h2>
-              <pre>
-                {r.data ? JSON.stringify(r.data, null, 2) : r.error}
-              </pre>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
