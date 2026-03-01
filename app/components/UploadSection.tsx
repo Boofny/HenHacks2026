@@ -56,7 +56,7 @@ export default function UploadSection() {
 
       <button
         onClick={handleButtonClick}
-        className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800 hover:cursor-pointer w-full"
+        className="px-4 py-2 bg-green-400 text-black font-semibold rounded hover:bg-green-300 hover:cursor-pointer w-full"
       >
         Select PDFs
       </button>
