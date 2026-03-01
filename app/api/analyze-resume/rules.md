@@ -1,0 +1,10 @@
+- Clear structure
+- Tailoring to the role
+- Strong action verbs
+- Quantified achievements
+- Results-focused bullets
+- Relevant keywords
+- Professional formatting
+- Demonstrated progression
+- Balanced skills section
+- Error‑free writing
