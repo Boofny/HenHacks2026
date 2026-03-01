@@ -1,7 +1,43 @@
 ## HenHacks
-Active Resume Grader
-Overview
+# AI Resume Ranking System
 
-Active Resume Grader is an automation tool that evaluates and ranks resumes based on user-defined criteria. The system allows users to upload a folder of resumes, define what qualifications they are looking for, and receive the top N resumes ranked by relevance and overall quality.
+An AI-powered web application that evaluates and ranks resumes based on customizable hiring criteria.
 
-This tool is designed to assist with resume screening by accelerating the initial review process. It does not replace human decision-making but serves as a structured, AI-assisted filtering system. test
+This project allows users to upload resumes and dynamically adjust weighted evaluation parameters such as leadership, experience, hard skills, and education. The system builds a structured prompt and sends it to an AI model to generate ranked results.
+
+---
+
+## Features
+
+- Upload multiple resumes
+- Adjustable weighted scoring system
+- Expandable advanced criteria for each category
+- Dynamic prompt generation
+- Configurable number of resumes to return
+- Clean, responsive UI built with Tailwind CSS
+- Client-side state management using React hooks
+
+---
+
+##  How It Works
+
+1. The user uploads resumes.
+2. The user sets evaluation weights:
+   - Leadership
+   - Experience
+   - Hard Skills
+   - Education
+3. Optional advanced criteria can be added for each category.
+4. Parameters are converted into a structured string.
+5. The prompt is sent to an AI model.
+6. The AI returns ranked resumes based on the defined weights.
+
+---
+
+## Tech Stack
+
+- **Next.js (App Router)**
+- **React**
+- **TypeScript**
+- **Tailwind CSS**
+- OpenAI API (for AI evaluation)
