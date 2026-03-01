@@ -42,4 +42,5 @@ next-env.d.ts
 
 # test files
 /app/api/test-gemini/
+/app/api/test-string-gemini/
 
