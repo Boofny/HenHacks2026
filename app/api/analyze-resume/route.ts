@@ -59,6 +59,7 @@ export async function POST(req: NextRequest) {
                   3. Multiply each satisfaction score by its corresponding weight.
                   4. Sum all weighted values.
                   5. Normalize the final score to a 0–100 percentage.
+                  6. Send the numberOfResumes as a
 
                   You must also generate a short reason sentence explaining *why* the resume received the score it did.  
                   The reason must be factual, based only on the resume content, and 1–2 sentences maximum.
@@ -70,6 +71,7 @@ export async function POST(req: NextRequest) {
                     "name": "",
                     "reason": "",
                     "resumeGrade": 0
+                    "numberOfResumes": "";
                   }
 
                   Rules:
