@@ -9,8 +9,8 @@ import AnalyzeButton from "./components/GradeButton";
 import logo from './assets/skillScanlogo.png';
 
 export default function Home() {
-  // State to hold the final built string
   const [paramsString, setParamsString] = useState<string>("");
+  const [hasFiles, setHasFiles] = useState(false);
 
   return (
     <div className="min-h-screen bg-green-300 flex justify-center items-start p-8">
@@ -24,22 +24,24 @@ export default function Home() {
           {/* The Beta badge */}
           <span className="bg-green-200 text-green-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm mt-1">
             Beta
-            </span>
+          </span>
         </h1>
         <div className="grid md:grid-cols-2 gap-10">
           
-          {/* LEFT SIDE: Upload Section + Big Logo */}
+          {/* LEFT SIDE: Upload Section + Big Logo (logo hidden when files selected) */}
           <div className="flex flex-col">
-            <UploadSection />
+            <UploadSection onFilesChange={(files) => setHasFiles(files.length > 0)} />
             
-            {/* BIG LOGO CONTAINER */}
-            <div className="flex-grow flex justify-center items-center mt-12 mb-6">
-              <img 
-                src={logo.src} 
-                alt="Skill Scan Logo" 
-                className="w-full max-w-sm object-contain opacity-90" 
-              />
-            </div>
+            {/* BIG LOGO CONTAINER — hides when files are selected so list doesn't overlap */}
+            {!hasFiles && (
+              <div className="flex-grow flex justify-center items-center mt-12 mb-6">
+                <img 
+                  src={logo.src} 
+                  alt="Skill Scan Logo" 
+                  className="w-full max-w-sm object-contain opacity-90" 
+                />
+              </div>
+            )}
           </div>
 
           {/* RIGHT SIDE: Parameters + Button */}
@@ -56,59 +58,3 @@ export default function Home() {
     </div>
   );
 }
-
-/*
-export default function Home() {
-  // State to hold the final built string
-  const [paramsString, setParamsString] = useState<string>("");
-
-  return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-start p-8">
-      <div className="bg-white w-full max-w-5xl p-10 rounded-xl shadow-lg">
-        <h1 className="text-3xl font-semibold mb-10 text-gray-900">
-          Skill Scan
-        </h1>
-
-        <div className="grid md:grid-cols-2 gap-10">
-          {/* Left side: Upload}
-          <UploadSection />
-
-          {/* Right side: Parameters + Button}
-          <div className="flex flex-col">
-            {/* Pass the setter to ParametersSection }
-            <ParametersSection setParamsString={setParamsString} />
-            
-            {/* Pass the actual string to your Analyze/Grade button }
-            <AnalyzeButton paramsString={paramsString} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-*/
-/*
-export default function Home() {
-  const [paramsString, setParamsString] = useState<string>("");
-  return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-start p-8">
-      <div className="bg-white w-full max-w-5xl p-10 rounded-xl shadow-lg">
-        <h1 className="text-3xl font-semibold mb-10 text-gray-900">
-          Active Resume Grader
-        </h1>
-
-        <div className="grid md:grid-cols-2 gap-10">
-          {/* Left side: Upload}
-          <UploadSection />
-
-          {/* Right side: Parameters + Button }
-          <div className="flex flex-col">
-            <ParametersSection />
-            <GradeButton />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-  }
-  */
