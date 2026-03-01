@@ -118,7 +118,11 @@
 import { useState } from "react";
 import { getFiles } from "../lib/fileStore";
 
-export default function AnalyzeButton() {
+interface AnalyzeButtonProps {
+  paramsString: string;
+}
+
+export default function AnalyzeButton({ paramsString }: AnalyzeButtonProps) {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -138,6 +142,8 @@ export default function AnalyzeButton() {
     try {
       const formData = new FormData();
       files.forEach((file) => formData.append("files", file));
+
+      formData.append("parameters", paramsString);
 
       const res = await fetch("/api/analyze-resume", {
         method: "POST",
