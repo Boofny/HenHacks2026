@@ -5,25 +5,37 @@ type Parameters = {
   leadershipWeight: string;
   leadershipAdvanced: string;
   experienceWeight: string;
+  experienceInYears: string;
   experienceAdvanced: string;
-  technicalSkills: string;
-  education: string;
+  hardSkillsWeight: string;
+  hardSkillsAdvanced: string;
+  educationWeight: string;
+  GPA: string;
+  nameOfUniversity: string;
+  corseWork:string;
   numberOfResumes: string;
 };
 
 export default function ParametersSection() {
   const [parameters, setParameters] = useState<Parameters>({
-    leadershipWeight: "0.3",
+    leadershipWeight: "",
     leadershipAdvanced: "",
-    experienceWeight: "0.3",
+    experienceWeight: "",
+    experienceInYears: "",
     experienceAdvanced: "",
-    technicalSkills: "0.3",
-    education: "0.2",
-    numberOfResumes: "5",
+    hardSkillsWeight: "",
+    hardSkillsAdvanced: "",
+    educationWeight: "",
+    GPA: "",
+    nameOfUniversity: "",
+    corseWork: "",
+    numberOfResumes: "",
   });
 
   const [showLeadershipAdvanced, setShowLeadershipAdvanced] = useState(false);
   const [showExperencesAdvanced, setShowExperencesAdvanced] = useState(false);
+  const [showHardSkillsAdvanced, setShowHardSkillsAdvanced] = useState(false);
+  const [showEducationAdvanced, setShowEducationAdvanced] = useState(false);
 
   // Build an array of strings from all parameter values
   const handleBuildStrings = () => {
@@ -50,6 +62,7 @@ export default function ParametersSection() {
         <input
           type="number"
           step="0.1"
+          placeholder="0.0"
           value={parameters.leadershipWeight}
           onChange={(e) =>
             setParameters((prev) => ({
@@ -87,6 +100,7 @@ export default function ParametersSection() {
         <input
           type="number"
           step="0.1"
+          placeholder="0.0"
           value={parameters.experienceWeight}
           onChange={(e) =>
             setParameters((prev) => ({
@@ -101,7 +115,13 @@ export default function ParametersSection() {
           <div className="flex flex-col gap-2 mt-2">
             <input
               type="number"
-              min="0"
+              value={parameters.experienceInYears}
+              onChange={(e) =>
+                setParameters((prev) => ({
+                  ...prev,
+                  experienceInYears: e.target.value,
+            }))
+          }
               placeholder="Minimum years of prior experience"
               className="border border-gray-300 rounded-md p-2"
             />
@@ -120,40 +140,94 @@ export default function ParametersSection() {
         )}
       </div>
 
-      {/* Other parameters */}
-      <label className="flex flex-col mb-4 text-sm">
-        Technical Skills Weight
+      {/* Hard Skills */}
+      <div className="flex flex-col mb-4 text-sm">
+        <label
+          onClick={() => setShowHardSkillsAdvanced(!showHardSkillsAdvanced)}
+          className="cursor-pointer font-medium flex justify-between"
+        >
+          Hard Skills Weight
+          <span>{showHardSkillsAdvanced ? "▲" : "▼"}</span>
+        </label>
         <input
           type="number"
           step="0.1"
-          value={parameters.technicalSkills}
+          placeholder="0.0"
+          value={parameters.hardSkillsWeight}
           onChange={(e) =>
-            setParameters((prev) => ({
-              ...prev,
-              technicalSkills: e.target.value,
-            }))
+            setParameters((prev) => ({ ...prev, hardSkillsWeight: e.target.value }))
           }
           className="border border-gray-300 rounded-md p-2 mt-1"
         />
-      </label>
 
-      <label className="flex flex-col mb-4 text-sm">
-        Education Weight
+        {showHardSkillsAdvanced && (
+          <textarea
+            placeholder="Enter advanced hard skills criteria...(ex: React, Python, SQL)"
+            value={parameters.hardSkillsAdvanced}
+            onChange={(e) =>
+              setParameters((prev) => ({ ...prev, hardSkillsAdvanced: e.target.value }))
+            }
+            className="border border-gray-300 rounded-md p-2 mt-2"
+          />
+        )}
+      </div>
+
+      {/* Education */}
+      <div className="flex flex-col mb-4 text-sm">
+        <label
+          onClick={() => setShowEducationAdvanced(!showEducationAdvanced)}
+          className="cursor-pointer font-medium flex justify-between"
+        >
+          Education Weight
+          <span>{showEducationAdvanced ? "▲" : "▼"}</span>
+        </label>
         <input
           type="number"
           step="0.1"
-          value={parameters.education}
+          placeholder="0.0"
+          value={parameters.educationWeight}
           onChange={(e) =>
-            setParameters((prev) => ({ ...prev, education: e.target.value }))
+            setParameters((prev) => ({ ...prev, educationWeight: e.target.value }))
           }
           className="border border-gray-300 rounded-md p-2 mt-1"
         />
-      </label>
+
+        {showEducationAdvanced && (
+          <div className="flex flex-col gap-2 mt-2">
+            <input
+              type="text"
+              placeholder="GPA"
+              value={parameters.GPA}
+              onChange={(e) =>
+                setParameters((prev) => ({ ...prev, GPA: e.target.value }))
+              }
+              className="border border-gray-300 rounded-md p-2"
+            />
+            <textarea
+              placeholder="Name of University"
+              value={parameters.nameOfUniversity}
+              onChange={(e) =>
+                setParameters((prev) => ({ ...prev, nameOfUniversity: e.target.value }))
+              }
+              className="border border-gray-300 rounded-md p-2"
+            />
+            <textarea
+              placeholder="Relevant Coursework"
+              value={parameters.corseWork}
+              onChange={(e) =>
+                setParameters((prev) => ({ ...prev, courseWork: e.target.value }))
+              }
+              className="border border-gray-300 rounded-md p-2"
+            />
+          </div>
+        )}
+      </div>
 
       <label className="flex flex-col mb-4 text-sm">
         Number of Resumes to Return
         <input
           type="number"
+          placeholder="Number of filtered resumes to return"
           value={parameters.numberOfResumes}
           onChange={(e) =>
             setParameters((prev) => ({
