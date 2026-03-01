@@ -58,11 +58,12 @@ export default function ParametersSection({ setParamsString }: ParametersSection
 
   return (
     <div className="flex flex-col">
-      <h2 className="text-xl font-medium mb-4">Evaluation Parameters</h2>
+      <h2 className="text-xl font-medium font-semibold mb-4">Evaluation Parameters</h2>
 
       {/* Leadership */}
       <div className="flex flex-col mb-4 text-sm">
         <label
+          title="Controls how much leadership experience influences the final resume grade."
           onClick={() => setShowLeadershipAdvanced(!showLeadershipAdvanced)}
           className="cursor-pointer font-medium flex justify-between"
         >
@@ -101,6 +102,7 @@ export default function ParametersSection({ setParamsString }: ParametersSection
       {/* Experience */}
       <div className="flex flex-col mb-4 text-sm">
         <label
+          title="Controls how much job experience influences the final resume grade."
           onClick={() => setShowExperencesAdvanced(!showExperencesAdvanced)}
           className="cursor-pointer font-medium flex justify-between"
         >
@@ -153,6 +155,7 @@ export default function ParametersSection({ setParamsString }: ParametersSection
       {/* Hard Skills */}
       <div className="flex flex-col mb-4 text-sm">
         <label
+          title="Controls how much individual hard skills influences the final resume grade."
           onClick={() => setShowHardSkillsAdvanced(!showHardSkillsAdvanced)}
           className="cursor-pointer font-medium flex justify-between"
         >
@@ -185,6 +188,7 @@ export default function ParametersSection({ setParamsString }: ParametersSection
       {/* Education */}
       <div className="flex flex-col mb-4 text-sm">
         <label
+          title="Controls how much education influences the final resume grade."
           onClick={() => setShowEducationAdvanced(!showEducationAdvanced)}
           className="cursor-pointer font-medium flex justify-between"
         >
@@ -233,7 +237,9 @@ export default function ParametersSection({ setParamsString }: ParametersSection
         )}
       </div>
 
-      <label className="flex flex-col mb-4 text-sm">
+      <label 
+        title="Controls how many applicants resumes should be returned"
+        className="flex flex-col mb-4 text-sm">
         Number of Resumes to Return
         <input
           type="number"
