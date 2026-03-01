@@ -41,3 +41,11 @@ This project allows users to upload resumes and dynamically adjust weighted eval
 - **TypeScript**
 - **Tailwind CSS**
 - Gemini API (for AI evaluation)
+
+---
+
+## ACTIVE DEMO 
+
+host Vercel:
+
+https://skill-scan-six.vercel.app/
