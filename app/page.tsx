@@ -3,7 +3,6 @@
 import "./globals.css";
 import UploadSection from "./components/UploadSection";
 import ParametersSection from "./components/ParametersSection";
-import GradeButton from "./components/GradeButton";
 import { useState } from "react";
 import AnalyzeButton from "./components/GradeButton";
 import logo from './assets/skillScanlogo.png';
