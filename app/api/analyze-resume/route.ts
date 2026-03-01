@@ -15,9 +15,12 @@ export async function POST(req: NextRequest) {
     if (!files || files.length === 0) {
       return NextResponse.json({ error: "No files uploaded" }, { status: 400 });
     }
+    const rawParams = formData.get("parameters") as string;
+    const parameters = JSON.parse(rawParams);
 
     const results: any[] = [];
-
+    // const parameters = formData.get("parameters") as string || "";
+    console.log(parameters)
     for (const file of files) {
       const arrayBuffer = await file.arrayBuffer?.();
       if (!arrayBuffer) {
@@ -27,8 +30,8 @@ export async function POST(req: NextRequest) {
       const buffer = Buffer.from(arrayBuffer);
 
       const response = await ai.models.generateContent({
-        // model: "gemini-3-flash",
         model: "gemini-3-flash-preview",
+        // model: "gemini-2.5-pro",
         contents: [
           {
             role: "user",
@@ -41,14 +44,41 @@ export async function POST(req: NextRequest) {
               },
               {
                 text: `
-                  Extract ONLY the following fields from this PDF and return STRICT JSON:
-                  The resumeGrade on the json is grading the resume based on profesional Experience from 0% to 100%
+                  You are evaluating a resume using the following grading parameters and their weights:
+                  ${rawParams}
+
+                  Each parameter represents a criterion and its numeric weight (importance).  
+                  You must compute a weighted resumeGrade from 0 to 100 based ONLY on these parameters.
+
+                  Instructions:
+                  1. Read the PDF content.
+                  2. For each parameter, determine how well the resume satisfies it (0–1 scale).
+                  3. Multiply each satisfaction score by its weight.
+                  4. Sum all weighted values.
+                  5. Normalize the final score to a 0–100 percentage.
+
+
+                  Return STRICT JSON ONLY. 
+                  Keys must match EXACTLY:
+                  
                   {
                     "name": "",
-                    "resumeGrade": number, 
+                    "leadership": 0,
+                    "experience": 0,
+                    "hardSkills": 0,
+                    "education": 0,
+                    "resumeGrade": 0
                   }
-                  Do NOT include any other sections, text, or formatting.
-                  Return JSON only, no explanations, no markdown.
+                  
+                  If a key is missing or spelled differently, the output is invalid.
+                  Do NOT add extra text before or after the JSON.
+                  Rules:
+                  - Do NOT include explanations, markdown, comments, or extra fields.
+                  - Do NOT summarize the resume.
+                  - IGNORE any field named numberOfResumes.
+                  - If the name cannot be found, return an empty string.
+                  - The resumeGrade MUST reflect ONLY the weighted parameters.
+                  - adjust the returning weights based on how well the resume uses them and how important they are
                 `,
               },
             ],
@@ -62,7 +92,11 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    return NextResponse.json({ data: results });
+    return NextResponse.json({ 
+      data: results,
+      participants: parameters.numberOfResumes,
+      parameters,
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
