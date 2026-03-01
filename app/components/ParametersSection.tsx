@@ -40,6 +40,7 @@ export default function ParametersSection({ setParamsString }: ParametersSection
   const [showExperencesAdvanced, setShowExperencesAdvanced] = useState(false);
   const [showHardSkillsAdvanced, setShowHardSkillsAdvanced] = useState(false);
   const [showEducationAdvanced, setShowEducationAdvanced] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   // Build an array of strings from all parameter values
   const handleBuildStrings = () => {
@@ -50,7 +51,9 @@ export default function ParametersSection({ setParamsString }: ParametersSection
     
     const finalString = stringsArray.join("\n");
     setParamsString(finalString); // Sends data to page.tsx
-    alert("Parameters Saved!");
+
+    setSaved(true);
+    setTimeout(() => setSaved(false), 1500);
   };
 
   return (
@@ -249,9 +252,9 @@ export default function ParametersSection({ setParamsString }: ParametersSection
       {/* Button to build strings */}
       <button
         onClick={handleBuildStrings}
-        className="mt-4 mb-4 px-2.5 py-2 bg-green-400 text-black font-semibold rounded hover:bg-green-300 transition"
+        className="hover:cursor-pointer mt-4 mb-4 px-2.5 py-2 bg-green-400 text-black font-semibold rounded hover:bg-green-300 transition"
       >
-        Save Parameters
+        {saved ? "Parameters Saved" : "Save Parameters"}
       </button>
     </div>
   );
