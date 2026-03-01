@@ -236,7 +236,7 @@ export default function AnalyzeButton({ paramsString }: AnalyzeButtonProps) {
     try {
       const formData = new FormData();
       files.forEach((file) => formData.append("files", file));
-      formData.append("parameters", paramsString);
+      formData.append("parameters", JSON.stringify(paramsString));
 
       const res = await fetch("/api/analyze-resume", {
         method: "POST",
