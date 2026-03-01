@@ -169,7 +169,7 @@ export default function AnalyzeButton({ paramsString }: AnalyzeButtonProps) {
       <button
         onClick={handleAnalyze}
         disabled={loading}
-        className="bg-black h-10 px-4 text-white rounded hover:bg-gray-800 w-full hover:cursor-pointer"
+        className="bg-green-400 h-10 px-4 text-black font-semibold rounded hover:bg-green-300 w-full hover:cursor-pointer"
       >
         {loading ? "Processing..." : "Analyze"}
       </button>
@@ -181,7 +181,7 @@ export default function AnalyzeButton({ paramsString }: AnalyzeButtonProps) {
       {results.length > 0 && (
         <div className="space-y-2">
           {results.map((r, idx) => (
-            <div key={idx} className="p-2 border rounded bg-gray-50 dark:bg-gray-900 text-white">
+            <div key={idx} className="p-2 border rounded bg-gray-50 dark:bg-green-300 text-white">
               <h2 className="font-semibold">{r.fileName}</h2>
               <pre>
                 {r.data ? JSON.stringify(r.data, null, 2) : r.error}

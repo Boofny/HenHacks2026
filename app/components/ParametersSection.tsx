@@ -249,7 +249,7 @@ export default function ParametersSection({ setParamsString }: ParametersSection
       {/* Button to build strings */}
       <button
         onClick={handleBuildStrings}
-        className="mt-4 mb-4 px-2.5 py-2 bg-black text-white rounded hover:bg-gray-500 transition"
+        className="mt-4 mb-4 px-2.5 py-2 bg-green-400 text-black font-semibold rounded hover:bg-green-300 transition"
       >
         Save Parameters
       </button>
