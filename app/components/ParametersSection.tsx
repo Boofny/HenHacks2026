@@ -16,7 +16,11 @@ type Parameters = {
   numberOfResumes: string;
 };
 
-export default function ParametersSection() {
+interface ParametersSectionProps {
+  setParamsString: (val: string) => void;
+}
+
+export default function ParametersSection({ setParamsString }: ParametersSectionProps) {
   const [parameters, setParameters] = useState<Parameters>({
     leadershipWeight: "",
     leadershipAdvanced: "",
@@ -39,11 +43,14 @@ export default function ParametersSection() {
 
   // Build an array of strings from all parameter values
   const handleBuildStrings = () => {
-    const stringsArray = Object.entries(parameters).map(
-      ([key, value]) => `${key}: ${value}`
-    );
-    console.log(stringsArray);
-    alert(stringsArray.join("\n"));
+    // Converts the object into a readable string format for the AI
+    const stringsArray = Object.entries(parameters)
+      .filter(([_, value]) => value !== "") 
+      .map(([key, value]) => `${key}: ${value}`);
+    
+    const finalString = stringsArray.join("\n");
+    setParamsString(finalString); // Sends data to page.tsx
+    alert("Parameters Saved!");
   };
 
   return (
