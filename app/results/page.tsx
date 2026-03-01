@@ -218,7 +218,7 @@ export default function ResultsPage() {
     .slice(0, topCount);
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-8">
+    <div className="min-h-screen bg-green-300 text-black p-8">
       <h2 className="text-3xl font-bold mb-8">
         Top {topCount} Candidates
       </h2>
@@ -229,7 +229,7 @@ export default function ResultsPage() {
         return (
           <div
             key={resume.id}
-            className="border border-gray-600 rounded-xl p-6 mb-6 bg-gray-900 shadow-lg"
+            className="border-6 border-gray-600 rounded-xl p-6 mb-6 bg-white shadow-lg"
           >
             <h3 className="text-xl font-semibold mb-2">
               #{index + 1} – {resume.name}
